@@ -4,7 +4,7 @@ class EnvConfig
 	@yaml_data
 
 	def self.env
-		@yaml_data ||= YAML.load(File.new('./scripts/methods/data.yml'))
+		@yaml_data ||= YAML.load(File.new('./data.yml'))
 		@yaml_data[@environment_selected]
 	end
 

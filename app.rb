@@ -1,7 +1,6 @@
 require 'Qt'
 
-Dir['./scripts/*.rb'].each { |f| require f }
-Dir['./scripts/methods/*.rb'].each { |f| require f }
+Dir['./lib/*.rb'].each { |f| require f }
 
 class Widget < Qt::Widget
 	attr_reader :browser_radios, :env_radios
@@ -63,11 +62,9 @@ class ScriptsWidget < Qt::Widget
 
 		EnvConfig.select_env @parent.env_radios.selected_value.to_s
 
-		browser = @parent.browser_radios.selected_value
+		browser = Browser.new @parent.browser_radios.selected_value
 
-		opts = { browser: browser }
-
-		Thread.new { Scripts.send path, opts }
+		Thread.new { Scripts.send path, browser }
 	end
 end
 
