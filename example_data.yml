@@ -1,0 +1,8 @@
+env1:
+  url: http://example.test.com
+  admin_username: admin
+  admin_password: password
+env2:
+  url: http://example.uat.com
+  admin_username: uat_admin
+  admin_password: password
