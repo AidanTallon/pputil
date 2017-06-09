@@ -1,4 +1,7 @@
 require 'Qt'
+require 'watir'
+require 'yaml'
+require 'random_word_generator'
 
 Dir['./lib/*.rb'].each { |f| require f }
 

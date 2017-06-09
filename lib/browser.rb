@@ -1,12 +1,10 @@
-require 'watir'
-require 'yaml'
-
 class Browser
 	attr_reader :driver, :is_logged_in
 
 	def initialize(browser)
 		if browser == :chrome
-			@driver = Watir::Browser.new :chrome, switches: ['--start-maximized']
+			caps = Selenium::WebDriver::Remote::Capabilities.chrome(chrome_options: { detach: true })
+			@driver = Watir::Browser.new :chrome, switches: ['--start-maximized'], desired_capabilities: caps
 		elsif browser == :ie
 			caps = Selenium::WebDriver::Remote::Capabilities.internet_explorer ignore_zoom_setting: true
 			@driver = Watir::Browser.new :ie, desired_capabilities: caps
@@ -14,12 +12,6 @@ class Browser
 		end
 		@yaml = EnvConfig.env
 		@is_logged_in = false
-	end
-
-	def keep_open
-		loop do
-			Thread.sleep(60000)
-		end
 	end
 
 	def login_as_admin
@@ -33,8 +25,8 @@ class Browser
 	def add_member(authCode)
 		@driver.goto @yaml['url'] + 'fw1/index.cfm?action=member.addBasicDetails&mode=1'
 
-		@driver.text_field(id: 'forename').set 'Test'
-		@driver.text_field(id: 'surname').set 'User'
+		@driver.text_field(id: 'forename').set 'Testuser'
+		@driver.text_field(id: 'surname').set RandomWordGenerator.word
 		@driver.text_field(id: 'countrycode').set 'UK'
 		@driver.text_field(id: 'originalsourcecode').set 'WPUN'
 		@driver.text_field(id: 'originalsourcecode').send_keys :enter
